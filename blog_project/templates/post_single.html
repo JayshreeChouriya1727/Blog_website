@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block title %}{{post.title}}{% endblock title %}
+{% block css %}
+.main1{
+background-color:black;
+
+}
+img{
+height:400px;
+}
+.main1 h3{
+color:white;
+}
+.main1 p{
+color:white;
+}
+.foote .hea{
+background-color:pink;
+
+}
+.foote .copyright{
+background-color:black;
+color:grey;
+}
+.navbar{
+background-color:black;
+}
+.navbar .nav-link{
+color:pink;
+font-weight:bold
+}
+{% endblock%}
+
+{% block body %}
+<!--__________________________________________single post description _________________________________________-->
+<div class="main-detail">
+    <div class="main1">
+        <div class="container pt-5 pb-5">
+            <div class="row r1">
+                <p class="text-light text-muted"><a href="/" class="text-muted text-decoration-none">Home</a><a
+                        class="text-muted text-decoration-none" href="#">>>{{post.category}}</a><a>>>{{post.title}}</a>
+                </p>
+                <div class="col-md-8">
+                    <img class="card-img-top" src="/media/{{post.image}}" alt="Card image cap">
+                </div>
+                <div class="col-md-4">
+                    <p class="text-uppercase">{{post.category}}</p>
+                    <h3 class="text-uppercase font-weight-bold">{{post.title}}</h3>
+                    <p>{{post.post_date}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main2">
+        <div class="container pt-3 pb-3">
+            <div class="row r1">
+                <div class="col-md-8">
+                    <div class="row ra">
+                        {{post.body | safe}}
+                    </div>
+                    <hr>
+                    <div class="row rb">
+                        <div class="col-md-12">
+                            {% with comments.count as total_comments %}
+                            <h4>
+                                {{total_comments}}comment{{total_comments|pluralize}}
+                            </h4>
+                            {% endwith %}
+                            {% for comment in comments %}
+                            Comment {{ forloop.counter}} by {{comment.name}}
+                            on {{comment.publish}}
+                            {{ comment.content|linebreaks }}
+                            {% empty %}
+                            <p>There are no comments for this post.</p>
+                            {% endfor %}
+                            <h5>Make a new comment</h5>
+                            <form id="myForm" method="post">
+                                {{comment_form.as_p}}
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="foote">
+        <div class="container-fluid py-0 px-0">
+            <div class="hea pt-5 pb-5">
+                <h3 class="text-center">Advertise With Us</h3>
+                <p class="text-center pl-3 pr-3">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deleniti,
+                    vero
+                    distinctio quos eos minima voluptatum consequatur corrupti molestias vel autem quidem! Sunt dolorem
+                    dolorum impedit expedita facere beatae, a consequuntur.</p>
+            </div>
+            <div class="copyright pt-3 pb-3">
+                <h6 class="text-muted text-center"> @ All Copyright Reserverd by Jayshree Chouriya</h6>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock body%}
